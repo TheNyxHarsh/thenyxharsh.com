@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HARSH | The Anime Arise Premium Global Hub</title>
+    <!-- FontAwesome Icons for Premium Interface Elements -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        /* --- PREMIUM CRUNCHYROLL-INSPIRED DESIGN SYSTEM --- */
+        :root {
+            --bg-cinema: #0C0D14;      /* Pure Deep Cinematic Charcoal */
+            --bg-deck: #14151F;        /* Crunchyroll-Style Card Deck Backing */
+            --bg-surface: #1C1E2A;     /* Elevated UI Interaction Layer */
+            --accent-orange: #DC143C;  /* Swapped to High-Octane Crimson Red */
+            --accent-gold: #F3C623;    /* Golden Super-Saiyan Aura Accent */
+            --glow-energy: rgba(220, 20, 60, 0.25);
+            --text-bright: #FFFFFF;
+            --text-sub: #A2A4B8;
+            --border-glow: rgba(220, 20, 60, 0.12);
+            --font-display: 'Impact', 'Segoe UI Black', sans-serif;
+            --font-body: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* --- GLOBAL APPLICATION RULES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-cinema);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #252838;
+            border: 2px solid var(--bg-cinema);
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        body {
+            background-color: var(--bg-cinema);
+            color: var(--text-bright);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* ANIME SCANLINE PATTERN OVERLAY */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.002) 1px, transparent 1px);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- CRUNCHYROLL STYLE FIXED HEADER NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(12, 13, 20, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 95px;
+        }
+
+        .brand-logo {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-style: italic;
+            background: linear-gradient(135deg, #FFF 30%, var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-logo span {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            font-family: var(--font-body);
+            font-weight: 900;
+            display: block;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active-link {
+            color: var(--text-bright);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 0; width: 0; height: 3px;
+            background: var(--accent-orange);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active-link::after {
+            width: 100%;
+        }
+
+        /* --- MULTI-PAGE VIEWPORT CONTROLLER --- */
+        .page-view {
+            padding: 160px 0 100px 0;
+            min-height: 100vh;
+            display: none;
+            animation: appViewReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page-view.active-view {
+            display: block;
+        }
+
+        @keyframes appViewReveal {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- PAGE 1: HERO SPOTLIGHT (HOME) --- */
+        .hero-billboard {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 5rem;
+            align-items: center;
+            min-height: calc(100vh - 260px);
+        }
+
+        .hero-banner-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .hero-banner-content h1 {
+            font-family: var(--font-display);
+            font-size: 6.5rem;
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 2.5rem;
+            font-style: italic;
+        }
+
+        .hero-banner-content h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-banner-content p {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            margin-bottom: 3.5rem;
+            max-width: 700px;
+        }
+
+        /* CYBERNETIC ASYMMETRICAL PFP FRAME */
+        .pfp-crown-zone {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .pfp-hex-shield {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--bg-surface) 0%, var(--bg-cinema) 100%);
+            border: 4px solid var(--accent-orange);
+            position: relative;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 50px rgba(220, 20, 60, 0.25);
+            transition: all 0.4s ease;
+        }
+
+        .pfp-hex-shield:hover {
+            transform: scale(1.04) rotate(3deg);
+            border-color: var(--accent-gold);
+        }
+
+        .pfp-avatar-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--text-bright);
+            letter-spacing: 2px;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        /* --- MASSIVE MEDIA INTERFACE ROWS (PAGES 2, 3, 4) --- */
+        .row-header {
+            margin-bottom: 3.5rem;
+            border-left: 6px solid var(--accent-orange);
+            padding-left: 1.5rem;
+        }
+
+        .row-header h2 {
+            font-family: var(--font-display);
+            font-size: 3.2rem;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .row-header p {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+        }
+
+        .stream-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stream-card {
+            background: var(--bg-deck);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .stream-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-orange);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .poster-viewport {
+            width: 100%;
+            padding-top: 142%; /* Highly optimized Crunchyroll card ratio */
+            position: relative;
+            background: #10111A;
+            overflow: hidden;
+        }
+
+        .poster-viewport video,
+        .poster-viewport img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: var(--accent-orange);
+            color: #FFF;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 4px;
+            z-index: 5;
+        }
+
+        .stream-meta-box {
+            padding: 1.5rem;
+            background: var(--bg-deck);
+        }
+
+        .stream-meta-box h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.3rem;
+        }
+
+        .stream-meta-box p {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* --- PAGE 5: COMMUNICATIONS SECURE GATEWAY --- */
+        .cinema-vault-box {
+            max-width: 850px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, var(--bg-deck) 0%, var(--bg-cinema) 100%);
+            border: 2px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 5rem 4rem;
+            text-align: center;
+        }
+
+        .cinema-vault-box h3 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-style: italic;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .social-link-stack {
+            margin-top: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .social-row-gateway {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-surface);
+            border: 1px solid rgba(220, 20, 60, 0.05);
+            padding: 2rem 3.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .social-row-gateway:hover {
+            border-color: var(--accent-orange);
+            background: rgba(220, 20, 60, 0.02);
+            transform: scale(1.01);
+        }
+
+        .gateway-left-wing {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .gateway-left-wing i { font-size: 2.8rem; }
+        .brand-insta { color: #FF3E6C; }
+        .brand-wa { color: #25D366; }
+
+        .gateway-labels { text-align: left; }
+        .gateway-labels h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        /* --- HIGH-OCTANE BUTTONS --- */
+        .btn-crunchy-main {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, #A30022 100%);
+            color: #FFF;
+            padding: 1.2rem 3.5rem;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-style: italic;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-crunchy-main:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.5);
+        }
+
+        footer {
+            border-top: 2px solid var(--bg-deck);
+            padding: 4rem 0;
+            text-align: center;
+            color: #51546E;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 1200px) {
+            .stream-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 992px) {
+            .hero-billboard { grid-template-columns: 1fr; text-align: center; }
+            .hero-banner-content h1 { font-size: 4.5rem; }
+            .nav-menu { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CRUNCHYROLL-STYLE APPLICATION HEADER BAR -->
+    <header>
+        <div class="container nav-container">
+            <div class="brand-logo">HARSH <span>// THE ANIME ARISE</span></div>
+            <ul class="nav-menu">
+                <li><span id="tab-home" class="nav-link active-link" onclick="swapView('app-home')">Home</span></li>
+                <li><span id="tab-reels" class="nav-link" onclick="swapView('app-reels')">AMV Edits</span></li>
+                <li><span id="tab-series" class="nav-link" onclick="swapView('app-series')">Series Cutdowns</span></li>
+                <li><span id="tab-database" class="nav-link" onclick="swapView('app-database')">Asset Engine</span></li>
+                <li><span id="tab-vault" class="nav-link" onclick="swapView('app-vault')">Community Vault</span></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- PAGE 1: HOME SPOTBOARD -->
+    <main id="app-home" class="page-view container active-view">
+        <div class="hero-billboard">
+            <div class="hero-banner-content">
+                <h2>ADVANCED VELOCITY GRAPHICS</h2>
+                <h1>Sovereign <em>Frame</em> Distribution</h1>
+                <p>An enterprise-grade media collective showcasing peak AMV performance, technical mask adjustments, and premium pacing architectures engineered to simulate elite anime layout platforms.</p>
+                <button class="btn-crunchy-main" onclick="swapView('app-reels')">
+                    LAUNCH PLAYER <i class="fa-solid fa-play"></i>
+                </button>
+            </div>
+            <div class="pfp-crown-zone">
+                <div class="pfp-hex-shield">
+                    <i class="fa-solid fa-bolt-lightning" style="font-size: 4rem; color: var(--accent-gold); margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px var(--accent-gold));"></i>
+                    <div class="pfp-avatar-title">HARSH CORE</div>
+                    <p style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-sub);">PFP OVERLAY PLACEHOLDER</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- PAGE 2: AMV REELS BROWSER -->
+    <section id="app-reels" class="page-view container">
+        <div class="row-header">
+            <h2>Trending AMV Renders</h2>
+            <p>High-frequency pacing compositions and keyframe synchronization showcases.</p>
+        </div>
+        <div class="stream-grid" id="amv-render-target">
+            <!-- Populated via JavaScript Model Layer -->
+        </div>
+    </section>
+
+    <!-- PAGE 3: SERIES CUTDOWNS -->
+    <section id="app-series" class="page-view container">
+        <div class="row-header">
+            <h2>Cinematic Series Cutdowns</h2>
+            <p>Extended sequence management and high-fidelity atmosphere grading displays.</p>
+        </div>
+        <div class="stream-grid" id="series-render-target">
+            <!-- Populated via JavaScript Model Layer -->
+        </div>
+    </section>
+
+    <!-- PAGE 4: DATA ENGINE ASSET REPOSITORY -->
+    <section id="app-database" class="page-view container">
+        <div class="row-header">
+            <h2>Backend Compilation Matrix</h2>
+            <p>Displaying live asset metrics managed via local runtime collections.</p>
+        </div>
+        <div class="stream-grid" id="database-render-target">
+            <!-- Populated via JavaScript Model Layer -->
+        </div>
+    </section>
+
+    <!-- PAGE 5: THE GATEWAYS (CONNECT VAULT) -->
+    <section id="app-vault" class="page-view container">
+        <div class="cinema-vault-box">
+            <h3>Establish Verification Connection</h3>
+            <p style="color: var(--text-sub); font-size: 1.15rem;">Access verified editorial communication networks immediately below.</p>
+            <div class="social-link-stack">
+                <a href="https://instagram.com/the.nyx.harsh" target="_blank" class="social-row-gateway">
+                    <div class="gateway-left-wing">
+                        <i class="fa-brands fa-instagram brand-insta"></i>
+                        <div class="gateway-labels">
+                            <h4>INSTAGRAM ARCHIVE</h4>
+                            <p>@the.nyx.harsh</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--accent-orange);"></i>
+                </a>
+                <a href="https://chat.whatsapp.com/J2AQlH7UyMt1QsJBATSMBq" target="_blank" class="social-row-gateway">
+                    <div class="gateway-left-wing">
+                        <i class="fa-brands fa-whatsapp brand-wa"></i>
+                        <div class="gateway-labels">
+                            <h4>ANIME ARISE STATION CONTROL</h4>
+                            <p>Join Live WhatsApp Group Channel</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--accent-orange);"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            &copy; 2026 HARSH // THE ANIME ARISE NETWORK SYSTEM. ENGINE DESIGN PATTERNS IMPLEMENTED GLOBALLY.
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT & BACKEND ROUTING ENGINE -->
+    <script>
+        /* --- PYTHON / JAVA INSPIRED MODEL DATA MATRIX --- */
+        const AMV_COLLECTION = [
+            { title: "Velocity Overdrive", category: "Action Mix", badge: "60 FPS", src: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-subway-station-with-neon-lights-43282-large.mp4", isVideo: true },
+            { title: "Sovereign Domain Mesh", category: "Aesthetic Grade", badge: "Render", src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80", isVideo: false },
+            { title: "Cine-Pacing Sequence", category: "VFX Run", badge: "FX Loop", src: "https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-42171-large.mp4", isVideo: true },
+            { title: "Ethereal Shade Matrix", category: "Color Profile", badge: "Graded", src: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=500&q=80", isVideo: false }
+        ];
+
+        const SERIES_COLLECTION = [
+            { title: "Shonen Chronos Cut", category: "Extended Cut", badge: "Arc 1", src: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=500&q=80", isVideo: false },
+            { title: "Neon Vanguard Sequence", category: "Cinematic Run", badge: "Teaser", src: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-subway-station-with-neon-lights-43282-large.mp4", isVideo: true },
+            { title: "Titan Grip Mask Test", category: "Mask Track", badge: "VFX", src: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=500&q=80", isVideo: false },
+            { title: "Aura Spark Generation", category: "Particle Fluid", badge: "Simulation", src: "https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-42171-large.mp4", isVideo: true }
+        ];
+
+        const RAW_ASSETS = [
+            { title: "System Overlay Overdrive", category: "LUT Layer", badge: "Core Asset", src: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=500&q=80", isVideo: false },
+            { title: "Sound Mesh Compilation", category: "Audio Beats", badge: "Audio Wave", src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80", isVideo: false },
+            { title: "Tracking Vector Block", category: "Motion Path", badge: "Node Data", src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80", isVideo: false },
+            { title: "Sub-Zero Texture Map", category: "Base Element", badge: "2K Map", src: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=500&q=80", isVideo: false }
+        ];
+
+        /* --- JAVA-STYLE COMPILER FUNCTIONS FOR UI INJECTION --- */
+        function compileDisplayGrid(dataset, elementId) {
+            const targetContainer = document.getElementById(elementId);
+            if (!targetContainer) return;
+            
+            let structuredHtmlResult = "";
+            
+            dataset.forEach(item => {
+                let viewportMediaMarkup = item.isVideo 
+                    ? `<video autoplay loop muted playsinline><source src="${item.src}" type="video/mp4"></video>`
+                    : `<img src="${item.src}" alt="Production Render Asset Layout">`;
+
+                structuredHtmlResult += `
+                    <div class="stream-card">
+                        <span class="card-badge">${item.badge}</span>
+                        <div class="poster-viewport">
+                            ${viewportMediaMarkup}
+                        </div>
+                        <div class="stream-meta-box">
+                            <h3>${item.title}</h3>
+                            <p>${item.category}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            targetContainer.innerHTML = structuredHtmlResult;
+        }
+
+        // Initialize display compilations on load
+        window.addEventListener('DOMContentLoaded', () => {
+            compileDisplayGrid(AMV_COLLECTION, 'amv-render-target');
+            compileDisplayGrid(SERIES_COLLECTION, 'series-render-target');
+            compileDisplayGrid(RAW_ASSETS, 'database-render-target');
+        });
+
+        /* --- ROUTING CONTROLLER ENGINE --- */
+        function swapView(targetViewId) {
+            const views = document.querySelectorAll('.page-view');
+            views.forEach(v => v.classList.remove('active-view'));
+
+            const currentActiveTarget = document.getElementById(targetViewId);
+            if (currentActiveTarget) currentActiveTarget.classList.add('active-view');
+
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(l => l.classList.remove('active-link'));
+
+            if (targetViewId === 'app-home') document.getElementById('tab-home').classList.add('active-link');
+            if (targetViewId === 'app-reels') document.getElementById('tab-reels').classList.add('active-link');
+            if (targetViewId === 'app-series') document.getElementById('tab-series').classList.add('active-link');
+            if (targetViewId === 'app-database') document.getElementById('tab-database').classList.add('active-link');
+            if (targetViewId === 'app-vault') document.getElementById('tab-vault').classList.add('active-link');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
